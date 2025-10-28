@@ -1,0 +1,908 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EcoMaterial Assistant | Sustainable Material Substitutions</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary-green: #2e7d32;
+            --light-green: #4caf50;
+            --dark-green: #1b5e20;
+            --cream: #f9f7f1;
+            --light-cream: #fdfbf5;
+            --dark-cream: #f5f2e6;
+            --text-dark: #333333;
+            --text-light: #666666;
+            --white: #ffffff;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        body {
+            background-color: var(--cream);
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Styles */
+        header {
+            background-color: var(--white);
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo i {
+            color: var(--primary-green);
+            font-size: 28px;
+        }
+
+        .logo h1 {
+            font-size: 24px;
+            color: var(--primary-green);
+            font-weight: 700;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-green);
+        }
+
+        .nav-actions {
+            display: flex;
+            gap: 15px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: none;
+            font-size: 15px;
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            border: 2px solid var(--primary-green);
+            color: var(--primary-green);
+        }
+
+        .btn-outline:hover {
+            background-color: var(--primary-green);
+            color: var(--white);
+        }
+
+        .btn-primary {
+            background-color: var(--primary-green);
+            color: var(--white);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--dark-green);
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, var(--light-green) 0%, var(--primary-green) 100%);
+            color: var(--white);
+            padding: 80px 0;
+            text-align: center;
+            border-radius: 0 0 30px 30px;
+            margin-bottom: 60px;
+        }
+
+        .hero h2 {
+            font-size: 42px;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        .hero p {
+            font-size: 18px;
+            max-width: 700px;
+            margin: 0 auto 30px;
+            opacity: 0.9;
+        }
+
+        .search-box {
+            max-width: 600px;
+            margin: 0 auto;
+            display: flex;
+            background: var(--white);
+            border-radius: 50px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+
+        .search-box input {
+            flex: 1;
+            padding: 18px 25px;
+            border: none;
+            outline: none;
+            font-size: 16px;
+            color: var(--text-dark);
+        }
+
+        .search-box button {
+            background: var(--primary-green);
+            color: var(--white);
+            border: none;
+            padding: 0 25px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background 0.3s;
+        }
+
+        .search-box button:hover {
+            background: var(--dark-green);
+        }
+
+        /* Features Section */
+        .features {
+            padding: 60px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .section-title h2 {
+            font-size: 36px;
+            color: var(--primary-green);
+            margin-bottom: 15px;
+        }
+
+        .section-title p {
+            color: var(--text-light);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .feature-card {
+            background: var(--white);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature-icon {
+            width: 70px;
+            height: 70px;
+            background: var(--light-cream);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .feature-icon i {
+            font-size: 30px;
+            color: var(--primary-green);
+        }
+
+        .feature-card h3 {
+            font-size: 22px;
+            margin-bottom: 15px;
+            color: var(--primary-green);
+        }
+
+        /* Chat Interface */
+        .chat-section {
+            padding: 60px 0;
+            background: var(--light-cream);
+            border-radius: 30px;
+            margin: 60px 0;
+        }
+
+        .chat-container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: var(--white);
+            border-radius: 20px;
+            box-shadow: var(--shadow);
+            overflow: hidden;
+        }
+
+        .chat-header {
+            background: var(--primary-green);
+            color: var(--white);
+            padding: 20px 30px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .chat-header i {
+            font-size: 24px;
+        }
+
+        .chat-header h3 {
+            font-size: 20px;
+        }
+
+        .chat-messages {
+            height: 400px;
+            padding: 20px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .message {
+            max-width: 80%;
+            padding: 15px 20px;
+            border-radius: 20px;
+            line-height: 1.5;
+        }
+
+        .user-message {
+            align-self: flex-end;
+            background: var(--primary-green);
+            color: var(--white);
+            border-bottom-right-radius: 5px;
+        }
+
+        .bot-message {
+            align-self: flex-start;
+            background: var(--dark-cream);
+            color: var(--text-dark);
+            border-bottom-left-radius: 5px;
+        }
+
+        .chat-input {
+            display: flex;
+            padding: 20px;
+            border-top: 1px solid #eee;
+        }
+
+        .chat-input input {
+            flex: 1;
+            padding: 15px 20px;
+            border: 1px solid #ddd;
+            border-radius: 30px;
+            outline: none;
+            font-size: 16px;
+        }
+
+        .chat-input button {
+            background: var(--primary-green);
+            color: var(--white);
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            margin-left: 10px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .chat-input button:hover {
+            background: var(--dark-green);
+        }
+
+        /* Material Recommendations */
+        .materials-section {
+            padding: 60px 0;
+        }
+
+        .materials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+        }
+
+        .material-card {
+            background: var(--white);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s;
+        }
+
+        .material-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .material-image {
+            height: 180px;
+            background: var(--light-green);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-size: 50px;
+        }
+
+        .material-content {
+            padding: 20px;
+        }
+
+        .material-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+
+        .material-name {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--primary-green);
+        }
+
+        .material-price {
+            background: var(--light-cream);
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-weight: 600;
+            color: var(--primary-green);
+        }
+
+        .sustainability-rating {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            margin-bottom: 15px;
+        }
+
+        .rating-star {
+            color: #ffc107;
+        }
+
+        .material-description {
+            color: var(--text-light);
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+
+        .material-link {
+            display: inline-block;
+            color: var(--primary-green);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            transition: color 0.3s;
+        }
+
+        .material-link:hover {
+            color: var(--dark-green);
+            text-decoration: underline;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark-green);
+            color: var(--white);
+            padding: 60px 0 30px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-column h3 {
+            font-size: 20px;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 40px;
+            height: 3px;
+            background: var(--light-green);
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+
+        .footer-links a {
+            color: #ccc;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: var(--white);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            color: var(--white);
+            text-decoration: none;
+            transition: background 0.3s;
+        }
+
+        .social-links a:hover {
+            background: var(--light-green);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #ccc;
+            font-size: 14px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            .nav-links {
+                gap: 15px;
+            }
+
+            .hero h2 {
+                font-size: 32px;
+            }
+
+            .hero p {
+                font-size: 16px;
+            }
+
+            .message {
+                max-width: 90%;
+            }
+
+            .features-grid, .materials-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <nav class="navbar">
+                <div class="logo">
+                    <i class="fas fa-leaf"></i>
+                    <h1>EcoMaterial Assistant</h1>
+                </div>
+                <div class="nav-links">
+                    <a href="#">Home</a>
+                    <a href="#">Materials</a>
+                    <a href="#">How It Works</a>
+                    <a href="#">About</a>
+                    <a href="#">Blog</a>
+                </div>
+                <div class="nav-actions">
+                    <button class="btn btn-outline">Sign In</button>
+                    <button class="btn btn-primary">Get Started</button>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h2>Find Sustainable Material Alternatives</h2>
+            <p>Our AI-powered assistant helps you discover eco-friendly substitutes for conventional materials with detailed sustainability metrics and pricing.</p>
+            <div class="search-box">
+                <input type="text" placeholder="Ask for sustainable alternatives (e.g., 'I'm making a dress out of nylon')">
+                <button><i class="fas fa-search"></i></button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features">
+        <div class="container">
+            <div class="section-title">
+                <h2>Why Choose EcoMaterial Assistant?</h2>
+                <p>We provide comprehensive sustainability data to help you make informed material choices</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-recycle"></i>
+                    </div>
+                    <h3>Sustainability Ratings</h3>
+                    <p>Get detailed sustainability scores based on environmental impact, carbon footprint, and circularity.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-dollar-sign"></i>
+                    </div>
+                    <h3>Price Comparison</h3>
+                    <p>Compare material costs to find sustainable options that fit your budget.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-link"></i>
+                    </div>
+                    <h3>Direct Product Links</h3>
+                    <p>Access verified suppliers and purchase sustainable materials directly.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Chat Interface -->
+    <section class="chat-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>Ask Our Material Assistant</h2>
+                <p>Get personalized recommendations for sustainable material alternatives</p>
+            </div>
+            <div class="chat-container">
+                <div class="chat-header">
+                    <i class="fas fa-robot"></i>
+                    <h3>EcoMaterial Assistant</h3>
+                </div>
+                <div class="chat-messages" id="chatMessages">
+                    <div class="message bot-message">
+                        Hello! I'm your sustainable material assistant. How can I help you today? For example, you can ask: "What's a sustainable alternative to nylon for clothing?"
+                    </div>
+                </div>
+                <div class="chat-input">
+                    <input type="text" id="userInput" placeholder="Type your question here...">
+                    <button id="sendButton"><i class="fas fa-paper-plane"></i></button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Material Recommendations -->
+    <section class="materials-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>Popular Sustainable Alternatives</h2>
+                <p>Discover eco-friendly materials for various applications</p>
+            </div>
+            <div class="materials-grid" id="materialsGrid">
+                <!-- Material cards will be dynamically inserted here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>EcoMaterial Assistant</h3>
+                    <p>Helping designers, manufacturers, and consumers make sustainable material choices for a greener future.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Home</a></li>
+                        <li><a href="#">Material Database</a></li>
+                        <li><a href="#">Sustainability Metrics</a></li>
+                        <li><a href="#">How It Works</a></li>
+                        <li><a href="#">Pricing</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Resources</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">Case Studies</a></li>
+                        <li><a href="#">Research Papers</a></li>
+                        <li><a href="#">Sustainability Guides</a></li>
+                        <li><a href="#">FAQ</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Contact Us</h3>
+                    <ul class="footer-links">
+                        <li><i class="fas fa-envelope"></i> hello@ecomaterial.com</li>
+                        <li><i class="fas fa-phone"></i> +1 (555) 123-4567</li>
+                        <li><i class="fas fa-map-marker-alt"></i> 123 Green Street, Eco City</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2023 EcoMaterial Assistant. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Sample data for sustainable materials
+        const sustainableMaterials = {
+            "nylon": [
+                {
+                    name: "Recycled Nylon (Econyl)",
+                    price: "$$",
+                    sustainability: 4,
+                    description: "Made from waste materials like fishing nets and fabric scraps. Reduces ocean waste and uses less water and energy.",
+                    link: "https://example.com/econyl",
+                    icon: "fas fa-fish"
+                },
+                {
+                    name: "Organic Hemp Fabric",
+                    price: "$$",
+                    sustainability: 5,
+                    description: "Hemp requires no pesticides and little water. It's durable, biodegradable, and improves soil health.",
+                    link: "https://example.com/hemp-fabric",
+                    icon: "fas fa-leaf"
+                },
+                {
+                    name: "Tencel (Lyocell)",
+                    price: "$$$",
+                    sustainability: 5,
+                    description: "Made from sustainably sourced wood pulp in a closed-loop process that recycles water and solvents.",
+                    link: "https://example.com/tencel",
+                    icon: "fas fa-tree"
+                }
+            ],
+            "polyester": [
+                {
+                    name: "Recycled PET Fabric",
+                    price: "$",
+                    sustainability: 4,
+                    description: "Made from recycled plastic bottles. Reduces plastic waste and uses less energy than virgin polyester.",
+                    link: "https://example.com/recycled-pet",
+                    icon: "fas fa-recycle"
+                },
+                {
+                    name: "Organic Cotton",
+                    price: "$$",
+                    sustainability: 4,
+                    description: "Grown without synthetic pesticides or fertilizers. Uses less water and promotes soil health.",
+                    link: "https://example.com/organic-cotton",
+                    icon: "fas fa-seedling"
+                },
+                {
+                    name: "Piñatex",
+                    price: "$$$",
+                    sustainability: 5,
+                    description: "Made from pineapple leaf fibers, a byproduct of agriculture. Vegan and sustainable alternative to leather.",
+                    link: "https://example.com/pinatex",
+                    icon: "fas fa-pagelines"
+                }
+            ],
+            "plastic": [
+                {
+                    name: "Bioplastics (PLA)",
+                    price: "$$",
+                    sustainability: 4,
+                    description: "Made from renewable resources like corn starch. Compostable in industrial facilities.",
+                    link: "https://example.com/bioplastics",
+                    icon: "fas fa-recycle"
+                },
+                {
+                    name: "Mycelium Packaging",
+                    price: "$$$",
+                    sustainability: 5,
+                    description: "Grown from mushroom roots. Fully biodegradable and can be custom-shaped for packaging needs.",
+                    link: "https://example.com/mycelium",
+                    icon: "fas fa-mushroom"
+                },
+                {
+                    name: "Recycled HDPE",
+                    price: "$",
+                    sustainability: 4,
+                    description: "High-density polyethylene made from post-consumer waste. Durable and widely recyclable.",
+                    link: "https://example.com/recycled-hdpe",
+                    icon: "fas fa-recycle"
+                }
+            ]
+        };
+
+        // DOM elements
+        const chatMessages = document.getElementById('chatMessages');
+        const userInput = document.getElementById('userInput');
+        const sendButton = document.getElementById('sendButton');
+        const materialsGrid = document.getElementById('materialsGrid');
+
+        // Display initial materials
+        displayMaterials('nylon');
+
+        // Send message function
+        function sendMessage() {
+            const message = userInput.value.trim();
+            if (message === '') return;
+
+            // Add user message to chat
+            addMessage(message, 'user');
+
+            // Clear input
+            userInput.value = '';
+
+            // Process message and generate response
+            setTimeout(() => {
+                processUserMessage(message);
+            }, 1000);
+        }
+
+        // Add message to chat
+        function addMessage(text, sender) {
+            const messageDiv = document.createElement('div');
+            messageDiv.classList.add('message');
+            messageDiv.classList.add(sender === 'user' ? 'user-message' : 'bot-message');
+            messageDiv.textContent = text;
+            chatMessages.appendChild(messageDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        // Process user message and generate response
+        function processUserMessage(message) {
+            const lowerMessage = message.toLowerCase();
+            let response = '';
+            let materialType = '';
+
+            // Check for material mentions
+            if (lowerMessage.includes('nylon')) {
+                materialType = 'nylon';
+                response = "For nylon, I recommend these sustainable alternatives:";
+            } else if (lowerMessage.includes('polyester') || lowerMessage.includes('poly')) {
+                materialType = 'polyester';
+                response = "For polyester, consider these eco-friendly options:";
+            } else if (lowerMessage.includes('plastic')) {
+                materialType = 'plastic';
+                response = "For plastic, here are some sustainable substitutes:";
+            } else {
+                response = "I can help you find sustainable alternatives to materials like nylon, polyester, or plastic. Could you specify which material you're looking to replace?";
+            }
+
+            // Add bot response
+            addMessage(response, 'bot');
+
+            // Display materials if a specific type was mentioned
+            if (materialType) {
+                displayMaterials(materialType);
+            }
+        }
+
+        // Display materials in the grid
+        function displayMaterials(type) {
+            materialsGrid.innerHTML = '';
+            
+            if (sustainableMaterials[type]) {
+                sustainableMaterials[type].forEach(material => {
+                    const materialCard = document.createElement('div');
+                    materialCard.classList.add('material-card');
+                    
+                    // Create stars for sustainability rating
+                    let stars = '';
+                    for (let i = 0; i < 5; i++) {
+                        stars += `<i class="fas fa-star rating-star ${i < material.sustainability ? 'filled' : ''}"></i>`;
+                    }
+                    
+                    materialCard.innerHTML = `
+                        <div class="material-image">
+                            <i class="${material.icon}"></i>
+                        </div>
+                        <div class="material-content">
+                            <div class="material-header">
+                                <div class="material-name">${material.name}</div>
+                                <div class="material-price">${material.price}</div>
+                            </div>
+                            <div class="sustainability-rating">
+                                ${stars}
+                                <span>Sustainability: ${material.sustainability}/5</span>
+                            </div>
+                            <p class="material-description">${material.description}</p>
+                            <a href="${material.link}" target="_blank" class="material-link">View Product →</a>
+                        </div>
+                    `;
+                    
+                    materialsGrid.appendChild(materialCard);
+                });
+            }
+        }
+
+        // Event listeners
+        sendButton.addEventListener('click', sendMessage);
+        userInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        });
+
+        // Search box functionality
+        const searchInput = document.querySelector('.search-box input');
+        const searchButton = document.querySelector('.search-box button');
+        
+        searchButton.addEventListener('click', () => {
+            if (searchInput.value.trim() !== '') {
+                userInput.value = searchInput.value;
+                sendMessage();
+                searchInput.value = '';
+            }
+        });
+        
+        searchInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                userInput.value = searchInput.value;
+                sendMessage();
+                searchInput.value = '';
+            }
+        });
+    </script>
+</body>
+</html>
